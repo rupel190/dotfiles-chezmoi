@@ -1,1 +1,4 @@
+# AGS generated stuff
+dot_config/ags/node_modules/
 dot_config/ags/@girs/
+dot_config/ags/symlink_ags
