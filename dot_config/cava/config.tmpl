@@ -1,3 +1,6 @@
+{{- $theme := index .catppuccin.macchiato -}}
+
+
 ## Configuration file for CAVA.
 # Remove the ; to change parameters.
 
@@ -232,13 +235,14 @@
 # You can define as many as 8 different colors. They range from bottom to top of screen
 
 gradient = 1
-gradient_color_1 = '#8bd5ca' # {< replace_color(colors::theme.teal) >}
-gradient_color_2 = '#91d7e3' # {< replace_color(colors::theme.sky) >}
-gradient_color_3 = '#7dc4e4' # {< replace_color(colors::theme.sapphire) >}
-gradient_color_4 = '#8aadf4' # {< replace_color(colors::theme.blue) >}
-gradient_color_5 = '#c6a0f6' # {< replace_color(colors::theme.mauve) >}
-gradient_color_6 = '#f5bde6' # {< replace_color(colors::theme.pink) >}
-gradient_color_7 = '#ee99a0' # {< replace_color(colors::theme.maroon) >} gradient_color_8 = '#ed8796' # {< replace_color(colors::theme.red) >}
+gradient_color_1 = '{{ $theme.Teal }}'
+gradient_color_2 = '{{ $theme.Sky }}'
+gradient_color_3 = '{{ $theme.Sapphire }}'
+gradient_color_4 = '{{ $theme.Blue }}'
+gradient_color_5 = '{{ $theme.Mauve }}'
+gradient_color_6 = '{{ $theme.Pink }}'
+gradient_color_7 = '{{ $theme.Maroon }}'
+gradient_color_8 = '{{ $theme.Red }}'
 
 
 
