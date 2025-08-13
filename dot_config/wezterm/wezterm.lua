@@ -31,6 +31,8 @@ config.font = wezterm.font_with_fallback({
 config.keys = {
 	{ key = "UpArrow", mods = "SHIFT", action = wezterm.action.ScrollToPrompt(-1) },
 	{ key = "DownArrow", mods = "SHIFT", action = wezterm.action.ScrollToPrompt(1) },
+	-- { key = "h", mods = "CTRL", action = wezterm.action.ActivateTabRelative(-1) },
+	-- { key = "l", mods = "CTRL", action = wezterm.action.ActivateTabRelative(1) },
 }
 
 -- config.font_size = 10
