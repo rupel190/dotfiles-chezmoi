@@ -1,0 +1,82 @@
+# === 3 MONITORS (no AVR) =========================================
+profile three-monitors {
+    # Center: ASUS 27" 1440p240 (DP-2)
+    output DP-2 {
+        mode 2560x1440@239.97
+        scale 1.0
+        position 0,0
+        transform normal
+        adaptive_sync off
+    }
+
+    # Left: Dell 27" 4K120 (DP-1)
+    output DP-1 {
+        mode 3840x2160@120
+        scale 1.5
+        position -2560,0
+        transform normal
+        adaptive_sync off
+    }
+
+    # Right: Samsung 1080p60 (HDMI-A-2), rotated
+    output HDMI-A-2 {
+        mode 1920x1080@60
+        scale 1.0
+        position 2560,0
+        transform 270
+        adaptive_sync off
+    }
+
+    # AVR off
+    output HDMI-A-1 disable
+}
+
+# === 4 SCREENS (AVR + all) =======================================
+profile four-screens {
+    output DP-2 {
+        mode 2560x1440@239.97
+        scale 1.0
+        position 0,0
+        transform normal
+        adaptive_sync off
+    }
+    output DP-1 {
+        mode 3840x2160@120
+        scale 1.5
+        position -2560,0
+        transform normal
+        adaptive_sync off
+    }
+    output HDMI-A-2 {
+        mode 1920x1080@60
+        scale 1.0
+        position 2560,0
+        transform 270
+        adaptive_sync off
+    }
+
+    # AVR (Marantz) far left; TV‑friendly (4K60, no VRR)
+    output HDMI-A-1 {
+        mode 3840x2160@60
+        scale 3.0
+        position -3840,0
+        transform normal
+        adaptive_sync off
+    }
+}
+
+# === AVR ONLY (standalone gaming) ================================
+profile avr-only {
+    output HDMI-A-1 {
+        # Stable default: 4K60
+        mode 3840x2160@60
+        scale 1.0
+        position 0,0
+        transform normal
+        adaptive_sync off
+    }
+    output DP-2 disable
+    output DP-1 disable
+    output HDMI-A-2 disable
+}
+
