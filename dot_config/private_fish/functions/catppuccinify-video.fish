@@ -23,15 +23,18 @@ function catppuccinify-video -d "Catppuccinify a video with hald CLUT (ffmpeg)"
     set -l level (string length -q -- "$_flag_level"; and echo $_flag_level; or echo 8)
     set -l out (string length -q -- "$_flag_output"; and echo $_flag_output; or echo (string replace -r '\.[^.]*$' '' (basename "$in"))"-ctp-$flavor.mp4")
 
-    set -l hald "hald$level-$flavor.png"
-    if not test -e "$hald"
-        echo $hald $level $flavor $out
-        magick hald:$level hald$level.png
-        catppuccinifier --flavor $flavor --hald $level hald$level-$flavor.png -d .
-        rm -f hald$level-$flavor.png
-    end
+    set -l hald "/tmp/hald$level-$flavor.png"
 
+    # TODO: Fix variables/echo/tmp-files mess
+
+    # echo "Generate hald as: $hald $level"
+    magick hald:$level hald$level.png
+    # echo "Catppuccinify hald with flavor $flavor to: $hald"
+    catppuccinifier --flavor $flavor --hald $level hald$level.png -d /tmp/
+    # echo "Apply hald to video with output: $out"
     ffmpeg -hide_banner -y -i "$in" -i "$hald" \
         -filter_complex "[0:v][1:v]haldclut" -c:a copy "$out"
-    echo "→ $out"
+    # echo "→ $out"
+
+    # rm -f $hald
 end
