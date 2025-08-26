@@ -282,7 +282,7 @@ bind = , catchall, submap, reset
 submap = reset
 
 
-{{- if eq .chezmoi.hostname "precuneus" }}
+{{- if eq .chezmoi.hostname "cordyceps" }}
 bind = , XF86MonBrightnessUp, exec, brightnessctl s +10%
 bind = , XF86MonBrightnessDown, exec, brightnessctl s 10%-
 
@@ -416,14 +416,23 @@ input {
 
     follow_mouse = 1
 
+    {{- if eq .chezmoi.hostname "cordyceps" }}
+    sensitivity = 0.2 # -1.0 - 1.0, 0 means no modification.
+		accel_profile = adaptive
+		scroll_factor = 0.5
+    natural_scroll = true
+    {{ else }}
     sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
 		accel_profile = flat
 		scroll_factor = 1
+    {{- end }}
+
+    
 }
 
 # https://wiki.hyprland.org/Configuring/Variables/#gestures
 gestures {
-    workspace_swipe = false
+    workspace_swipe = true
 }
 
 
