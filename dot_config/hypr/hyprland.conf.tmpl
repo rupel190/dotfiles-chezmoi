@@ -33,6 +33,10 @@ env = XDG_SESSION_DESKTOP,Hyprland
 ################
 
 # See https://wiki.hyprland.org/Configuring/Monitors/
+
+{{- if eq .chezmoi.hostname "cordyceps" }}
+# monitor = eDP-1, 2880x1920@120.00000
+{{- end }}
 #
 # $monwork = DP-1, 3840x2160@120, -2560x0, 1.5
 # $monside = DP-2, 2560x1440@239.972000, 0x0, 1
@@ -46,9 +50,10 @@ env = XDG_SESSION_DESKTOP,Hyprland
 # # monitor = HDMI-A-2, preferred, -1920x0, 1               # Horizontal
 # # monitor= HDMI-A-1, preferred, 2560x0, 3
 
+
+
 # $togglescreens = hyprctl keyword monitor HDMI-A-2, disabled; hyprctl keyword monitor HDMI-A-2, disabled; hyprctl keyword monitor DP-1, disabled; hyprctl keyword monitor $monhifi
 # $togglepc = hyprctl keyword monitor $monwork; hyprctl keyword monitor $monmisc; hyprctl keyword monitor $monside; 
-
 ###################
 ### MY PROGRAMS ###
 ###################
@@ -165,6 +170,10 @@ exec-once = hyprpm reload   # Hypr plugin manager (Mouse cursor etc.)
 general {
     gaps_in = 5
     gaps_out = 5, 15, 15, 15
+
+    {{- if eq .chezmoi.hostname "cordyceps" }}
+    gaps_out = 1, 1, 0, 1
+    {{- end }}
 
     border_size = 2
 
@@ -365,9 +374,9 @@ bind = ALT_L SHIFT, TAB, workspace, m-1
 
 
 # # Laptop multimedia keys for volume and LCD brightness
-# bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
-# bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-# bindel = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindel = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 # bindel = ,XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 # bindel = ,XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+
 # bindel = ,XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-
@@ -419,7 +428,7 @@ input {
     {{- if eq .chezmoi.hostname "cordyceps" }}
     sensitivity = 0.2 # -1.0 - 1.0, 0 means no modification.
 		accel_profile = adaptive
-		scroll_factor = 0.5
+		scroll_factor = 0.2
     natural_scroll = true
     {{ else }}
     sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
