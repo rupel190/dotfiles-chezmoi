@@ -99,51 +99,51 @@ exec-once= kanshi
 
 $mon = DP-1
 $ws = 1 
-workspace = $ws, monitor:$mon, name:orga, layoutopt:orientation:top
+workspace = $ws, monitor:$mon, persistent:true name:orga, layoutopt:orientation:top
 windowrule= workspace $ws silent, class:^(KeePassXC|ticktick|obsidian)$
 exec-once = [workspace $ws silent] obsidian & keepassxc & ticktick
-exec-once = hyprctl dispatch resizewindowpixel exact 26% 38%,class:KeePassXC
+exec-once = sleep 2 && hyprctl dispatch resizewindowpixel exact 26% 38%,class:KeePassXC
 
 $ws = 2
-# workspace = $ws, monitor:$mon, name:term
+# workspace = $ws, monitor:$mon, persistent:true, name:term
 # exec-once = [workspace $ws silent] $terminal #$fileManager
 
 # Doesn't work, at least not with how steam is currently configured
 # $ws = 3
-# workspace = $ws, monitor:$mon, name:steam
+# workspace = $ws, monitor:$mon, persistent:true, name:steam
 # exec-once = [workspace $ws silent] steam 
 
 
 $mon = DP-2
 $ws = 4
-workspace = $ws, monitor:$mon, default:true, name:main
+workspace = $ws, monitor:$mon, persistent:true, default:true, name:main
 windowrule= workspace $ws silent, class:^(zen-browser)$
 exec-once = [workspace $ws silent] zen-browser
 
 # $ws = 5
-# workspace = $ws, monitor:$mon, name:term
+# workspace = $ws, monitor:$mon, persistent:true, name:term
 # exec-once = [workspace $ws silent] $terminal 
 
 # $ws = 3
-# workspace = $ws, monitor:$mon
+# workspace = $ws, monitor:$mon, persistent:true
 # exec-once = [workspace $ws silent] Placeholder
 
 
 $mon = HDMI-A-2
 
 $ws = 7 
-workspace = $ws, monitor:$mon, default:true, name:chat, layoutopt:orientation:top
+workspace = $ws, monitor:$mon, persistent:true, default:true, name:chat, layoutopt:orientation:top
 windowrule= workspace $ws silent, class:^(discord|Signal|Slack)$
 exec-once = [workspace $ws silent] slack & signal-desktop & discord
 
 $ws = 8
-workspace = $ws, monitor:$mon, name:audio, layoutopt:orientation:top
+workspace = $ws, monitor:$mon, persistent:true, name:audio, layoutopt:orientation:top
 windowrule= workspace $ws silent, class:^(Spotify|org.pulseaudio.pavucontrol|com.github.wwmm.easyeffects)$
 exec-once = [workspace $ws silent] pavucontrol & easyeffects
 exec-once = hyprctl dispatch resizewindowpixel 100% 20%, ^(com.github.wwmm.easyeffects)$
 
 # $ws = 9
-# workspace = $ws, monitor:$music
+# workspace = $ws, monitor:$music, persistent:true
 # windowrule = workspace $ws silent, class:^(Spotify)$
 # exec-once = [workspace $ws silent] Spotify
 
@@ -276,6 +276,7 @@ bindd = $mainMod, S, Screenshot, exec, slurp | grim -g - - | wl-copy
 bindd = $mainMod SHIFT, S, Swappy Screenshot, exec, grim -g "$(slurp)" - | tee /tmp/screenshot.png | wl-copy && swappy -f /tmp/screenshot.png -o ~/Pictures/swappy/$(date +%F_%H-%M-%S).png
 
 
+
 bind = $mainMod, B, submap, buffer
 submap = buffer
 bind = , 1, workspace, 1
@@ -330,8 +331,9 @@ bind = $mainMod, right, resizeactive, 50 0
 bind = $mainMod, up, resizeactive, 0 -50
 bind = $mainMod, down, resizeactive, 0 50
 
-# bind = $mainMod, O, cyclenext, hist
-# bind = $mainMod, I, cyclenext, prev hist
+# 'visible' to cycle through all workspaces -> doesn't include non-active workspaces unfortunately
+bind = $mainMod, O, cyclenext, visible
+bind = $mainMod, I, cyclenext, visible prev
 
 
 # Switch workspaces with mainMod + [0-9]
@@ -357,6 +359,13 @@ bind = $mainMod SHIFT, 7, movetoworkspace, 7
 bind = $mainMod SHIFT, 8, movetoworkspace, 8
 bind = $mainMod SHIFT, 9, movetoworkspace, 9
 bind = $mainMod SHIFT, 0, movetoworkspace, 10
+#
+# Move/resize windows with mainMod + LMB/RMB and dragging
+bindm = $mainMod, mouse:272, movewindow
+bindm = $mainMod, mouse:273, resizewindow
+
+bind = $mainMod, mouse:275, workspace, m+1
+bind = $mainMod, mouse:276, workspace, m-1
 
 # Scroll through existing workspaces with mainMod + scroll
 # bind = $mainMod, mouse_down, workspace, e+1
