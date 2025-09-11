@@ -100,32 +100,35 @@ exec-once= kanshi
 $mon = DP-1
 $ws = 1 
 workspace = $ws, monitor:$mon, persistent:true name:orga, layoutopt:orientation:top
-windowrule= workspace $ws silent, class:^(KeePassXC|ticktick|obsidian)$
-exec-once = [workspace $ws silent] obsidian & keepassxc & ticktick
-exec-once = sleep 2 && hyprctl dispatch resizewindowpixel exact 26% 38%,class:KeePassXC
+windowrule= workspace $ws silent, class:^(KeePassXC|obsidian)$
+exec-once = [workspace $ws silent] obsidian & keepassxc
+exec-once = sleep 4 && hyprctl dispatch resizewindowpixel exact 26% 38%,class:KeePassXC
 
 $ws = 2
-# workspace = $ws, monitor:$mon, persistent:true, name:term
+workspace = $ws, monitor:$mon, persistent:true
+windowrule= workspace $ws silent, class:^(ticktick|Proton Mail)$
+exec-once = [workspace $ws silent] ticktick & proton-mail
 # exec-once = [workspace $ws silent] $terminal #$fileManager
 
 # Doesn't work, at least not with how steam is currently configured
 # $ws = 3
-# workspace = $ws, monitor:$mon, persistent:true, name:steam
+workspace = $ws, monitor:$mon, persistent:true
 # exec-once = [workspace $ws silent] steam 
 
 
 $mon = DP-2
 $ws = 4
 workspace = $ws, monitor:$mon, persistent:true, default:true, name:main
-windowrule= workspace $ws silent, class:^(zen-browser)$
-exec-once = [workspace $ws silent] zen-browser
+windowrule= workspace $ws silent, class:^(zen)$
+exec-once = [workspace special:browser] zen-browser
+# exec-once = [workspace $ws silent] zen-browser
 
 # $ws = 5
-# workspace = $ws, monitor:$mon, persistent:true, name:term
+workspace = $ws, monitor:$mon, persistent:true
 # exec-once = [workspace $ws silent] $terminal 
 
-# $ws = 3
-# workspace = $ws, monitor:$mon, persistent:true
+# $ws = 6
+workspace = $ws, monitor:$mon, persistent:true
 # exec-once = [workspace $ws silent] Placeholder
 
 
@@ -138,12 +141,12 @@ exec-once = [workspace $ws silent] slack & signal-desktop & discord
 
 $ws = 8
 workspace = $ws, monitor:$mon, persistent:true, name:audio, layoutopt:orientation:top
-windowrule= workspace $ws silent, class:^(Spotify|org.pulseaudio.pavucontrol|com.github.wwmm.easyeffects)$
+windowrule= workspace $ws silent, class:^(org.pulseaudio.pavucontrol|com.github.wwmm.easyeffects)$
 exec-once = [workspace $ws silent] pavucontrol & easyeffects
 exec-once = hyprctl dispatch resizewindowpixel 100% 20%, ^(com.github.wwmm.easyeffects)$
 
 # $ws = 9
-# workspace = $ws, monitor:$music, persistent:true
+workspace = $ws, monitor:$music, persistent:true
 # windowrule = workspace $ws silent, class:^(Spotify)$
 # exec-once = [workspace $ws silent] Spotify
 
@@ -155,7 +158,8 @@ exec-once = hyprsunset  		# Blue light & gamma (brightness) filter # Also see fo
 exec-once = ags run         # Widgets (Taskbar)
 exec-once = hypridle	  		# Needs above env vars to find its own config
 # exec-once = mpvpaper --loop ALL ~/Videos/wallpaper/pine-forest-wallpaperwaves-com-ctp-macchiato.mp4
-exec-once = ~/.config/hypr/mpvpaperfix.sh #Wallpaper with memleak fix
+# Didn't fix, 40gb memory!!!
+# exec-once = ~/.config/hypr/mpvpaperfix.sh #Wallpaper with memleak fix
 exec-once = hyprpm reload   # Hypr plugin manager (Mouse cursor etc.)
 # exec-once = ianny					# Reminder utility for taking screen breaks
 
@@ -295,11 +299,11 @@ submap = reset
 {{- if eq .chezmoi.hostname "cordyceps" }}
 bind = , XF86MonBrightnessUp, exec, brightnessctl s +10%
 bind = , XF86MonBrightnessDown, exec, brightnessctl s 10%-
+{{- end }}
 
 # Example special workspace (scratchpad)
-# bind = $mainMod, SPACE, togglespecialworkspace, magic
-# bind = $mainMod SHIFT, SPACE, movetoworkspace, special:magic
-{{- end }}
+bind = $mainMod, SPACE, togglespecialworkspace, magic
+bind = $mainMod SHIFT, SPACE, movetoworkspace, special:magic
 
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
@@ -332,8 +336,11 @@ bind = $mainMod, up, resizeactive, 0 -50
 bind = $mainMod, down, resizeactive, 0 50
 
 # 'visible' to cycle through all workspaces -> doesn't include non-active workspaces unfortunately
-bind = $mainMod, O, cyclenext, visible
-bind = $mainMod, I, cyclenext, visible prev
+bind = $mainMod, O, workspace, m-1
+bind = $mainMod, I, workspace, m+1
+#bind = $mainMod, I, cyclenext, visible prev
+#bind = $mainMod, O, cyclenext, visible
+
 
 
 # Switch workspaces with mainMod + [0-9]
