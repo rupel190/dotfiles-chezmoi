@@ -14,7 +14,7 @@ config.scrollback_lines = 200000
 
 -- tab bar
 config.window_close_confirmation = "NeverPrompt"
-config.tab_bar_at_bottom = true
+-- config.tab_bar_at_bottom = true
 config.hide_tab_bar_if_only_one_tab = true
 config.show_new_tab_button_in_tab_bar = false
 -- Requires nightly build
@@ -32,12 +32,21 @@ config.font = wezterm.font_with_fallback({
 config.keys = {
 	{ key = "UpArrow", mods = "SHIFT", action = wezterm.action.ScrollToPrompt(-1) },
 	{ key = "DownArrow", mods = "SHIFT", action = wezterm.action.ScrollToPrompt(1) },
-	-- { key = "h", mods = "CTRL", action = wezterm.action.ActivateTabRelative(-1) },
-	-- { key = "l", mods = "CTRL", action = wezterm.action.ActivateTabRelative(1) },
+	{ key = "h", mods = "CTRL|SHIFT", action = wezterm.action.ActivateTabRelative(-1) },
+	{ key = "l", mods = "CTRL|SHIFT", action = wezterm.action.ActivateTabRelative(1) },
 }
 
 -- config.font_size = 10
 -- config.color_scheme = "AdventureTime"
 
--- Finally, return the configuration to wezterm:
+-- Initialize tabline plugin
+local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
+tabline.setup({
+	options = {
+		theme = config.color_scheme or "default",
+	},
+})
+tabline.apply_to_config(config)
+
+-- Return the configuration to wezterm:
 return config
