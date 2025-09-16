@@ -5,6 +5,8 @@ import Bar from "./widget/Bar"
 app.start({
   css: style,
   main() {
-    app.get_monitors().map(Bar)
+    app.get_monitors()
+      .filter(m => !m.model.includes("DELL") && !m.model.includes("PG27AQDM"))
+      .map(Bar)
   },
 })

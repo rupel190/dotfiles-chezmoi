@@ -120,7 +120,7 @@ $mon = DP-2
 $ws = 4
 workspace = $ws, monitor:$mon, persistent:true, default:true, name:main
 windowrule= workspace $ws silent, class:^(zen)$
-exec-once = [workspace special:browser] zen-browser
+# exec-once = [workspace special:browser] zen-browser
 # exec-once = [workspace $ws silent] zen-browser
 
 # $ws = 5
@@ -182,7 +182,7 @@ general {
     border_size = 2
 
     # https://wiki.hyprland.org/Configuring/Variables/#variable-types for info about colors
-    col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
+    col.active_border = rgba(8aadf4ee) rgba(eed49fee) 45deg
     col.inactive_border = rgba(595959aa)
 
     # Set to true enable resizing windows by clicking and dragging on borders and gaps
@@ -455,7 +455,8 @@ input {
 
 # https://wiki.hyprland.org/Configuring/Variables/#gestures
 gestures {
-    workspace_swipe = true
+  gesture = 3, right, workspace
+  gesture = 3, left, workspace
 }
 
 
