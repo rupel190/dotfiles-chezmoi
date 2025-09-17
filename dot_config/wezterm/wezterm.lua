@@ -28,6 +28,7 @@ config.font = wezterm.font_with_fallback({
 	"GeistMono Nerd Font Mono",
 	"JetBrains Mono",
 })
+-- config.font_size = 10
 
 config.keys = {
 	{ key = "UpArrow", mods = "SHIFT", action = wezterm.action.ScrollToPrompt(-1) },
@@ -36,7 +37,6 @@ config.keys = {
 	{ key = "l", mods = "CTRL|SHIFT", action = wezterm.action.ActivateTabRelative(1) },
 }
 
--- config.font_size = 10
 -- config.color_scheme = "AdventureTime"
 
 -- Initialize tabline plugin
@@ -44,6 +44,14 @@ local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabl
 tabline.setup({
 	options = {
 		theme = config.color_scheme or "default",
+	},
+	sections = {
+		tabline_a = {}, -- Hide mode
+		tabline_b = {}, -- Hide workspace
+		tabline_c = { " " },
+		tabline_x = {},
+		tabline_y = {}, -- Hide clock
+		tabline_z = { "cpu", "ram", "battery" }, -- Show CPU, memory, and battery
 	},
 })
 tabline.apply_to_config(config)
