@@ -56,5 +56,8 @@ tabline.setup({
 })
 tabline.apply_to_config(config)
 
+-- Override problematic tabline settings for Hyprland compatibility
+config.window_decorations = "TITLE | RESIZE"
+
 -- Return the configuration to wezterm:
 return config
