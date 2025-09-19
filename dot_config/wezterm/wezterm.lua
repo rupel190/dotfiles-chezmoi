@@ -35,6 +35,8 @@ config.keys = {
 	{ key = "DownArrow", mods = "SHIFT", action = wezterm.action.ScrollToPrompt(1) },
 	{ key = "h", mods = "CTRL|SHIFT", action = wezterm.action.ActivateTabRelative(-1) },
 	{ key = "l", mods = "CTRL|SHIFT", action = wezterm.action.ActivateTabRelative(1) },
+	{ key = "{", mods = "CTRL|SHIFT", action = wezterm.action.MoveTabRelative(-1) },
+	{ key = "}", mods = "CTRL|SHIFT", action = wezterm.action.MoveTabRelative(1) },
 }
 
 -- config.color_scheme = "AdventureTime"
