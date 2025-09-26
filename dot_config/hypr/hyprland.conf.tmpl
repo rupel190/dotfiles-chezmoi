@@ -105,7 +105,7 @@ windowrule= workspace $ws silent, class:^(ticktick|Proton Mail)$
 windowrule= workspace $ws silent, class:^(zen)$
 windowrule= workspace $ws silent, class:^(discord|Signal|Slack)$
 windowrule= workspace $ws silent, class:^(org.pulseaudio.pavucontrol|com.github.wwmm.easyeffects)$
-{{ - end }}
+{{- end }}
 
 $mon = DP-1
 $ws = 1 
@@ -236,7 +236,10 @@ animations {
     animation = hyprfocusOut, 1, 2.7, default
 
     # Default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
+  
+    {{- if eq .chezmoi.hostname "amanita" }}
 	  workspace_wraparound = true
+    {{- end }}
 
     bezier = easeOutQuint,0.23,1,0.32,1
     bezier = easeInOutCubic,0.65,0.05,0.36,1
@@ -466,8 +469,7 @@ input {
 
 # https://wiki.hyprland.org/Configuring/Variables/#gestures
 gestures {
-  gesture = 3, left, workspace, m+1
-  gesture = 3, right, workspace, m-1
+  gesture = 3, horizontal, workspace
 }
 
 
