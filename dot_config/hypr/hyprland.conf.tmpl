@@ -98,16 +98,23 @@ exec-once= xrandr --output DP-2 --primary
 # Service alternative: systemd fails cause the wayland socket from hyprland isn't ready yet
 exec-once= kanshi
 
+
+{{- if eq .chezmoi.hostname "amanita" }}
+windowrule= workspace $ws silent, class:^(KeePassXC|obsidian)$
+windowrule= workspace $ws silent, class:^(ticktick|Proton Mail)$
+windowrule= workspace $ws silent, class:^(zen)$
+windowrule= workspace $ws silent, class:^(discord|Signal|Slack)$
+windowrule= workspace $ws silent, class:^(org.pulseaudio.pavucontrol|com.github.wwmm.easyeffects)$
+{{ - end }}
+
 $mon = DP-1
 $ws = 1 
 workspace = $ws, monitor:$mon, persistent:true name:orga, layoutopt:orientation:top
-windowrule= workspace $ws silent, class:^(KeePassXC|obsidian)$
 exec-once = [workspace $ws silent] obsidian & keepassxc
 exec-once = sleep 4 && hyprctl dispatch resizewindowpixel exact 26% 38%,class:KeePassXC
 
 $ws = 2
 workspace = $ws, monitor:$mon, persistent:true
-windowrule= workspace $ws silent, class:^(ticktick|Proton Mail)$
 exec-once = [workspace $ws silent] ticktick & proton-mail
 # exec-once = [workspace $ws silent] $terminal #$fileManager
 
@@ -120,7 +127,6 @@ workspace = $ws, monitor:$mon, persistent:true
 $mon = DP-2
 $ws = 4
 workspace = $ws, monitor:$mon, persistent:true, default:true, name:main
-windowrule= workspace $ws silent, class:^(zen)$
 # exec-once = [workspace special:browser] zen-browser
 # exec-once = [workspace $ws silent] zen-browser
 
@@ -137,12 +143,10 @@ $mon = HDMI-A-2
 
 $ws = 7 
 workspace = $ws, monitor:$mon, persistent:true, default:true, name:chat, layoutopt:orientation:top
-windowrule= workspace $ws silent, class:^(discord|Signal|Slack)$
 exec-once = [workspace $ws silent] slack & signal-desktop & discord
 
 $ws = 8
 workspace = $ws, monitor:$mon, persistent:true, name:audio, layoutopt:orientation:top
-windowrule= workspace $ws silent, class:^(org.pulseaudio.pavucontrol|com.github.wwmm.easyeffects)$
 exec-once = [workspace $ws silent] pavucontrol & easyeffects
 exec-once = hyprctl dispatch resizewindowpixel 100% 20%, ^(com.github.wwmm.easyeffects)$
 
@@ -462,8 +466,8 @@ input {
 
 # https://wiki.hyprland.org/Configuring/Variables/#gestures
 gestures {
-  gesture = 3, right, workspace
-  gesture = 3, left, workspace
+  gesture = 3, left, workspace, m+1
+  gesture = 3, right, workspace, m-1
 }
 
 
