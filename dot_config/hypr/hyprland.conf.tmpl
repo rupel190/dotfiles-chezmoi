@@ -38,20 +38,22 @@ env = XDG_SESSION_DESKTOP,Hyprland
 # monitor = eDP-1, 2880x1920@120.00000
 {{- end }}
 #
-# $monwork = DP-1, 3840x2160@120, -2560x0, 1.5
-# $monside = DP-2, 2560x1440@239.972000, 0x0, 1
-# $monmisc = HDMI-A-2, preferred, 2560x0, 1, transform, 3   # Vertical
+#TODO: 120hz !!?
+$monwork = DP-1, 3840x2160@60.00, -2560x0, 1.5
+$monside = DP-2, 2560x1440@239.972000, 0x0, 1
+$monmisc = HDMI-A-2, preferred, 2560x0, 1, transform, 3   # Vertical
 # # $monhifi = HDMI-A-1, disabled
 # $monhifi = HDMI-A-1, preferred, -3840x0, 3, vrr, 0
-# monitor = $monwork
-# monitor = $monside
-# monitor = $monmisc
+monitor = $monwork
+monitor = $monside
+monitor = $monmisc
 # monitor = $monhifi
 # # monitor = HDMI-A-2, preferred, -1920x0, 1               # Horizontal
 # # monitor= HDMI-A-1, preferred, 2560x0, 3
 
 
 
+# Found the correct command for the idea - might be worth a retry or little script: hyprctl keyword monitor HDMI-A-1,3840x2160@60,0x0,1.0
 # $togglescreens = hyprctl keyword monitor HDMI-A-2, disabled; hyprctl keyword monitor HDMI-A-2, disabled; hyprctl keyword monitor DP-1, disabled; hyprctl keyword monitor $monhifi
 # $togglepc = hyprctl keyword monitor $monwork; hyprctl keyword monitor $monmisc; hyprctl keyword monitor $monside; 
 ###################
@@ -505,6 +507,10 @@ cursor {
 misc {
     force_default_wallpaper = 0 # Set to 0 or 1 to disable the anime mascot wallpapers
     disable_hyprland_logo = true # If true disables the random hyprland logo / anime girl background. :(
+}
+
+debug {
+    disable_logs = false
 }
 
 
