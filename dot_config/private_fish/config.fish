@@ -5,11 +5,12 @@ if status is-interactive
 end
 
 set -a PATH /home/rupel/.local/bin
-set -x EDITOR nvim
 
 neofetch
 fish_vi_key_bindings
 set -g fish_greeting
+set -gx EDITOR nvim
+set -gx TERMINAL wezterm
 set -gx DEBUGINFOD_URLS https://debuginfod.archlinux.org
 
 if type -q fzf
