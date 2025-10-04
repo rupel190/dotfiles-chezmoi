@@ -26,6 +26,7 @@ env = XDG_CURRENT_DESKTOP,Hyprland
 env = XDG_SESSION_TYPE,wayland
 env = XDG_SESSION_DESKTOP,Hyprland
 
+env = TERMINAL,wezterm
 
 
 ################
@@ -42,12 +43,12 @@ env = XDG_SESSION_DESKTOP,Hyprland
 $monwork = DP-1, 3840x2160@60.00, -2560x0, 1.5
 $monside = DP-2, 2560x1440@239.972000, 0x0, 1
 $monmisc = HDMI-A-2, preferred, 2560x0, 1, transform, 3   # Vertical
-# # $monhifi = HDMI-A-1, disabled
-# $monhifi = HDMI-A-1, preferred, -3840x0, 3, vrr, 0
+# $monhifi = HDMI-A-1, disabled
+monitor = HDMI-A-1, 3840x2160@60.00000, -3840x0, 3, vrr, 0
+
 monitor = $monwork
 monitor = $monside
 monitor = $monmisc
-# monitor = $monhifi
 # # monitor = HDMI-A-2, preferred, -1920x0, 1               # Horizontal
 # # monitor= HDMI-A-1, preferred, 2560x0, 3
 
@@ -99,6 +100,10 @@ windowrule = immediate, class:^(cs2)$
 exec-once= xrandr --output DP-2 --primary
 # Service alternative: systemd fails cause the wayland socket from hyprland isn't ready yet
 exec-once= kanshi
+# Auth daemon for GUI apps requesting privilege elevation
+exec-once = systemctl --user start hyprpolkitagent
+
+
 #
 # Utility
 # exec-once = hyprnotify		# Part of ecosystem but non-bundled. For hyprctl notify.
@@ -152,7 +157,8 @@ exec-once = sleep 4 && hyprctl dispatch resizewindowpixel exact 26% 38%,class:Ke
 $ws = 8
 workspace = $ws, monitor:$mon, persistent:true, layoutopt:orientation:top
 windowrule= workspace $ws silent, class:^(discord|Signal|org.pulseaudio.pavucontrol)$
-exec-once = [workspace $ws silent] pavucontrol & discord & signal-desktop
+# attempt to fix pavu race condition with gtk theming
+exec-once = sleep 2 && [workspace $ws silent] pavucontrol & discord & signal-desktop
 exec-once = hyprctl dispatch resizewindowpixel 100% 20%,class:^(org.pulseaudio.pavucontrol)$
 $ws = 9
 workspace = $ws, monitor:$mon, persistent:true
