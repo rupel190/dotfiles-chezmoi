@@ -24,10 +24,10 @@ local appearance = require("appearance")
 config.color_scheme = appearance.scheme_for_appearance(appearance.get_appearance())
 config.window_background_opacity = 0.9
 
-config.font = wezterm.font_with_fallback({
-	"GeistMono Nerd Font Mono",
-	"JetBrains Mono",
-})
+-- config.font = wezterm.font_with_fallback({
+-- 	"GeistMono Nerd Font Mono",
+-- 	"JetBrains Mono",
+-- })
 -- config.font_size = 10
 
 config.keys = {

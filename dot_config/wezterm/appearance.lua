@@ -23,4 +23,9 @@ function M.scheme_for_appearance(appearance)
 	end
 end
 
+--TODO: Override until gnome theming fixed on nixOS
+function M.get_appearance()
+  return "Dark"
+end
+
 return M
