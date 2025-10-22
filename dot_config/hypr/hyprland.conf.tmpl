@@ -4,6 +4,7 @@
 # Create your files separately and then link them to this file like this:
 source = ./macchiato.conf
 source = ./plugins.conf
+source = ./keybinds.conf
 
 #############################
 ### ENVIRONMENT VARIABLES ###
@@ -62,14 +63,6 @@ monitor = $monmisc
 ###################
 
 # See https://wiki.hyprland.org/Configuring/Keywords/
-
-$terminal = wezterm
-$fileManager = wezterm start --always-new-process yazi
-#
-#TODO: Get rid of wofi
-$menu = fuzzel
-# $menu = wofi --show drun
-
 
 ##############################
 ### WINDOWS AND WORKSPACES ###
@@ -231,8 +224,8 @@ animations {
     enabled = yes, please :)
 
     # hyprfocus plugin
-    animation = hyprfocusIn, 1, 0.8, default
-    animation = hyprfocusOut, 1, 2.7, default
+    # animation = hyprfocusIn, 1, 0.8, default
+    # animation = hyprfocusOut, 1, 2.7, default
 
     # Default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
   
@@ -277,142 +270,6 @@ animations {
 
 
 
-
-###################
-### KEYBINDINGS ###
-###################
-
-# See https://wiki.hyprland.org/Configuring/Keywords/
-$mainMod = SUPER # Sets "Windows" key as main modifier
-
-bindd = $mainMod, S, Screenshot, exec, slurp | grim -g - - | wl-copy
-# bindd = $mainMod SHIFT, S, Screenshot to file, exec, grim -g "$(slurp)" - | tee "/home/rupel/Pictures/slurp/$(date +%F_%H-%M-%S).png" | wl-copy
-bindd = $mainMod SHIFT, S, Swappy Screenshot, exec, grim -g "$(slurp)" - | tee /tmp/screenshot.png | wl-copy && swappy -f /tmp/screenshot.png -o ~/Pictures/swappy/$(date +%F_%H-%M-%S).png
-
-
-
-bind = $mainMod, B, submap, buffer
-submap = buffer
-bind = , 1, workspace, 1
-bind = , 2, workspace, 2
-bind = , 3, workspace, 3
-bind = , 4, workspace, 4
-bind = , 5, workspace, 5
-bind = , 6, workspace, 6
-bind = , 7, workspace, 7
-bind = , 8, workspace, 8
-bind = , 9, workspace, 9
-bind = , catchall, submap, reset
-submap = reset
-
-
-{{- if eq .chezmoi.hostname "cordyceps" }}
-bind = , XF86MonBrightnessUp, exec, brightnessctl s +10%
-bind = , XF86MonBrightnessDown, exec, brightnessctl s 10%-
-{{- end }}
-
-# Example special workspace (scratchpad)
-bind = $mainMod, SPACE, togglespecialworkspace, magic
-bind = $mainMod SHIFT, SPACE, movetoworkspace, special:magic
-
-
-# Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-bind = $mainMod, RETURN, exec, $terminal
-bind = $mainMod, C, killactive,
-# bind = $mainMod, M, exit,
-bind = $mainMod, E, exec, $fileManager
-bind = $mainMod, F, togglefloating,
-bind = $mainMod, R, exec, $menu
-bind = $mainMod, P, pseudo, # dwindle
-bind = $mainMod, V, togglesplit, # dwindle
-# bind = $mainMod, O, exec, $togglescreens, # switch between monitor setup and tv
-# bind = $mainMod, P, exec, $togglepc, # switch between monitor setup and tv
-
-# Move focus
-bind = $mainMod, J, movefocus, d
-bind = $mainMod, K, movefocus, u
-bind = $mainMod, H, movefocus, l
-bind = $mainMod, L, movefocus, r
-
-# Move window
-bind = $mainMod SHIFT, J, movewindow, d
-bind = $mainMod SHIFT, K, movewindow, u
-bind = $mainMod SHIFT, H, movewindow, l
-bind = $mainMod SHIFT, L, movewindow, r
-
-bind = $mainMod, left, resizeactive, -50 0 
-bind = $mainMod, right, resizeactive, 50 0 
-bind = $mainMod, up, resizeactive, 0 -50
-bind = $mainMod, down, resizeactive, 0 50
-
-# 'visible' to cycle through all workspaces -> doesn't include non-active workspaces unfortunately
-bind = $mainMod, O, workspace, m-1
-bind = $mainMod, I, workspace, m+1
-# Keybind not caught ?!?
-bind = $mainMod, [, workspace, m-1
-bind = $mainMod, ], workspace, m+1
-#bind = $mainMod, I, cyclenext, visible prev
-#bind = $mainMod, O, cyclenext, visible
-
-
-
-# Switch workspaces with mainMod + [0-9]
-bind = $mainMod, 1, workspace, 1
-bind = $mainMod, 2, workspace, 2
-bind = $mainMod, 3, workspace, 3
-bind = $mainMod, 4, workspace, 4
-bind = $mainMod, 5, workspace, 5
-bind = $mainMod, 6, workspace, 6
-bind = $mainMod, 7, workspace, 7
-bind = $mainMod, 8, workspace, 8
-bind = $mainMod, 9, workspace, 9
-bind = $mainMod, 0, workspace, 10
-
-# Move active window to a workspace with mainMod + SHIFT + [0-9]
-bind = $mainMod SHIFT, 1, movetoworkspace, 1
-bind = $mainMod SHIFT, 2, movetoworkspace, 2
-bind = $mainMod SHIFT, 3, movetoworkspace, 3
-bind = $mainMod SHIFT, 4, movetoworkspace, 4
-bind = $mainMod SHIFT, 5, movetoworkspace, 5
-bind = $mainMod SHIFT, 6, movetoworkspace, 6
-bind = $mainMod SHIFT, 7, movetoworkspace, 7
-bind = $mainMod SHIFT, 8, movetoworkspace, 8
-bind = $mainMod SHIFT, 9, movetoworkspace, 9
-bind = $mainMod SHIFT, 0, movetoworkspace, 10
-#
-# Move/resize windows with mainMod + LMB/RMB and dragging
-bindm = $mainMod, mouse:272, movewindow
-bindm = $mainMod, mouse:273, resizewindow
-
-bind = $mainMod, mouse:275, workspace, m+1
-bind = $mainMod, mouse:276, workspace, m-1
-
-# Scroll through existing workspaces with mainMod + scroll
-# bind = $mainMod, mouse_down, workspace, e+1
-# bind = $mainMod, mouse_up, workspace, e-1
-
-# Move/resize windows with mainMod + LMB/RMB and dragging
-bindm = $mainMod, mouse:272, movewindow
-bindm = $mainMod, mouse:273, resizewindow
-
-bind = ALT_L, TAB, workspace, m+1
-bind = ALT_L SHIFT, TAB, workspace, m-1
-
-
-
-# # Laptop multimedia keys for volume and LCD brightness
-bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
-bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-bindel = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-# bindel = ,XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-# bindel = ,XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+
-# bindel = ,XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-
-#
-# # Requires playerctl
-# bindl = , XF86AudioNext, exec, playerctl next
-# bindl = , XF86AudioPause, exec, playerctl play-pause
-# bindl = , XF86AudioPlay, exec, playerctl play-pause
-# bindl = , XF86AudioPrev, exec, playerctl previous
 
 
 
@@ -466,10 +323,10 @@ input {
     
 }
 
-# https://wiki.hyprland.org/Configuring/Variables/#gestures
-gestures {
-  gesture = 3, horizontal, workspace
-}
+# # https://wiki.hyprland.org/Configuring/Variables/#gestures
+# gestures {
+#   gesture = 3, horizontal, workspace
+# }
 
 
 
