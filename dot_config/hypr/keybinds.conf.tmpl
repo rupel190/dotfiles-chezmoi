@@ -7,7 +7,7 @@ $terminal = wezterm
 $fileManager = wezterm start --always-new-process yazi
 
 
-
+# Apps
 bind = $mainMod, T, exec, $terminal
 bind = $mainMod, RETURN, exec, $menu
 bind = $mainMod, E, exec, $fileManager
@@ -17,8 +17,14 @@ bind = $mainMod, F, togglefloating,
 bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, V, togglesplit, # dwindle
 
+# Screencap
 bindd = $mainMod, S, Screenshot, exec, slurp | grim -g - - | wl-copy
 bindd = $mainMod SHIFT, S, Swappy Screenshot, exec, grim -g "$(slurp)" - | tee /tmp/screenshot.png | wl-copy && swappy -f /tmp/screenshot.png -o ~/Pictures/swappy/$(date +%F_%H-%M-%S).png
+bind = $mainMod SHIFT, S, exec, grim -g "$(slurp)" - | tee /tmp/screenshot.png | wl-copy && swappy -f /tmp/screenshot.png -o ~/Pictures/swappy/$(date +%F_%H-%M-%S).png
+$recPath = ~/Videos/screenrec/
+bind = $mainMod ALT, S, exec, wl-screenrec -g "$(slurp)" --audio --filename $recPath$(date +%F_%H-%M-%S).mp4 &; notify-send "Screenrec started"
+bind = $mainMod ALT SHIFT, S, exec, pkill wl-screenrec && notify-send "Screenrec saved to $recPath"
+
 
 
 # Move focus
@@ -46,6 +52,8 @@ bind = $mainMod ALT, I, movetoworkspace, m+1
 
 bind = $mainMod, mouse:275, workspace, m+1
 bind = $mainMod, mouse:276, workspace, m-1
+bind = $mainMod ALT, mouse:275, movetoworkspace, m+1
+bind = $mainMod ALT, mouse:276, movetoworkspace, m-1
 bind = ALT_L, TAB, workspace, m+1
 bind = ALT_L SHIFT, TAB, workspace, m-1
 

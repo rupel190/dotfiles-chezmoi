@@ -3,12 +3,10 @@ return {
   -- return get_theme() for get() until issue is fixed
   {
     "akinsho/bufferline.nvim",
-    init = function()
-      local bufline = require("catppuccin.groups.integrations.bufferline")
-      function bufline.get()
-        return bufline.get_theme()
-      end
-    end,
+    -- init = function()
+    --   local bufline = require("catppuccin.groups.integrations.bufferline")
+    --   bufline.get()
+    -- end,
   },
 
   {

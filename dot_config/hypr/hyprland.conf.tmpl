@@ -16,7 +16,7 @@ source = ./keybinds.conf
 env = XCURSOR_SIZE,24
 env = HYPRCURSOR_SIZE,24
 
-env = SDL_VIDEODRIVER,wayland									# Run SDL2 applications on Wayland. Remove or set to x11 if games that provide older versions of SDL cause compatibility issues
+# env = SDL_VIDEODRIVER,wayland									# Run SDL2 applications on Wayland. Remove or set to x11 if games that provide older versions of SDL cause compatibility issues
 env = GDK_BACKEND,wayland,x11,* 							# GTK: Use wayland if available. If not: try x11, then any other GDK backend.
 
 env = QT_QPA_PLATFORM,wayland;xcb							# Qt: Use wayland if available, fall back to x11 if not.
@@ -40,8 +40,8 @@ env = TERMINAL,wezterm
 # monitor = eDP-1, 2880x1920@120.00000
 {{- end }}
 #
-#TODO: 120hz !!?
-$monwork = DP-1, 3840x2160@60.00, -2560x0, 1.5
+#TODO: 120hz  workihng?
+$monwork = DP-1, 3840x2160@120.00, -2560x0, 1.5
 $monside = DP-2, 2560x1440@239.972000, 0x0, 1
 $monmisc = HDMI-A-2, preferred, 2560x0, 1, transform, 3   # Vertical
 # $monhifi = HDMI-A-1, disabled
@@ -97,17 +97,15 @@ exec-once= kanshi
 exec-once = systemctl --user start hyprpolkitagent
 
 
-#
 # Utility
 # exec-once = hyprnotify		# Part of ecosystem but non-bundled. For hyprctl notify.
 # exec-once = hyprpaper			# Wallpaper
+
 exec-once = hyprsunset  		# Blue light & gamma (brightness) filter # Also see for IPC through hyperctl: https://wiki.hypr.land/Hypr-Ecosystem/hyprsunset/#ipc
+exec-once = swaync
 exec-once = ags run         # Widgets (Taskbar)
 exec-once = hypridle	  		# Needs above env vars to find its own config
-# exec-once = mpvpaper --loop ALL ~/Videos/wallpaper/pine-forest-wallpaperwaves-com-ctp-macchiato.mp4
-# Didn't fix, 40gb memory!!!
-# exec-once = ~/.config/hypr/mpvpaperfix.sh #Wallpaper with memleak fix
-exec-once = hyprpm reload   # Hypr plugin manager (Mouse cursor etc.)
+# exec-once = hyprpm reload   # Hypr plugin manager (Mouse cursor etc.)
 # exec-once = ianny					# Reminder utility for taking screen breaks
 
 
@@ -120,7 +118,7 @@ exec-once = [workspace $ws silent] obsidian
 $ws = 2
 workspace = $ws, monitor:$mon, persistent:true
 # exec-once = [workspace $ws silent] ticktick 
-# exec-once = [workspace $ws silent] $terminal #$fileManager
+# exec-once = [workspace $ws silent] $terminal #start $fileManager
 # Doesn't work, at least not with how steam is currently configured
 $ws = 3
 workspace = $ws, monitor:$mon, persistent:true
@@ -131,7 +129,7 @@ $mon = DP-2
 $ws = 4
 workspace = $ws, monitor:$mon, persistent:true, default:true, name:main
 # exec-once = [workspace special:browser] zen-browser
-exec-once = [workspace $ws] zen-browser
+exec-once = [workspace $ws] flatpak run app.zen_browser.zen   # Flatpak
 windowrule= workspace $ws silent, class:^(zen)$
 $ws = 5
 workspace = $ws, monitor:$mon, persistent:true
@@ -142,21 +140,21 @@ workspace = $ws, monitor:$mon, persistent:true
 
 
 $mon = HDMI-A-2
-$ws = 7 
+$ws = 7
 workspace = $ws, monitor:$mon, persistent:true, default:true, layoutopt:orientation:top
-windowrule= workspace $ws silent, class:^(ticktick|Proton Mail|KeePassXC|Slack)$
+windowrule= workspace $ws silent, class:^(ticktick|Proton Mail|Slack)$
 exec-once = [workspace $ws silent] slack & proton-mail & keepassxc & ticktick
-exec-once = sleep 4 && hyprctl dispatch resizewindowpixel exact 26% 38%,class:KeePassXC
-$ws = 8
+# exec-once = sleep 4 && hyprctl dispatch resizewindowpixel exact 26% 38%,class:org.keepassxc.KeePassXC
+$ws = 8 
 workspace = $ws, monitor:$mon, persistent:true, layoutopt:orientation:top
-windowrule= workspace $ws silent, class:^(discord|Signal|org.pulseaudio.pavucontrol)$
-# attempt to fix pavu race condition with gtk theming
-exec-once = sleep 2 && [workspace $ws silent] pavucontrol & discord & signal-desktop
-exec-once = hyprctl dispatch resizewindowpixel 100% 20%,class:^(org.pulseaudio.pavucontrol)$
+exec-once = [workspace $ws silent] signal-messenger
+windowrule= workspace $ws silent, class:^(discord|Signal)$
+# exec-once = hyprctl dispatch resizewindowpixel 100% 20%,class:^(org.pulseaudio.pavucontrol)$
 $ws = 9
 workspace = $ws, monitor:$mon, persistent:true
 windowrule = workspace $ws silent, class:^(Spotify)$
 exec-once = [workspace $ws silent] spotify
+exec-once = [workspace $ws silent] wezterm start pulsemixer
 
 {{- end }}
 

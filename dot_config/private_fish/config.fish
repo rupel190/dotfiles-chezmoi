@@ -26,7 +26,9 @@ abbr scur systemctl --user restart
 abbr -a spa sudo pacman
 abbr -a cm chezmoi
 abbr -a cma chezmoi apply
+abbr -a cmcd chezmoi cd
 abbr -a cme chezmoi edit ~/.config/
+
 abbr -a vault cd /home/rupel/.local/share/Cryptomator/mnt/Vault
 abbr -a hyprconf nvim /home/rupel/.config/hypr
 
