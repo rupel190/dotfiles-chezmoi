@@ -36,6 +36,26 @@ return {
     },
   },
 
+  
+  -- Mason: Disable and instead install packages through NixOS
+  {
+    "mason-org/mason.nvim",
+    enabled = false,
+    -- opts = {
+    --   ensure_installed = {
+    --     "stylua",
+    --     "shellcheck",
+    --     "shfmt",
+    --     "flake8",
+    --   },
+    -- },
+  },
+  {
+    "mason-org/mason-lspconfig.nvim",
+    enabled = false,
+  },
+
+
   -- Bookmarks
   {
     "EvWilson/spelunk.nvim",
