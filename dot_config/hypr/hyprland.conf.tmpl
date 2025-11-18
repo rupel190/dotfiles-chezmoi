@@ -13,9 +13,6 @@ source = ./keybinds.conf
 # See https://wiki.hyprland.org/Configuring/Environment-variables/
 # Set env first, some of my apps require them, especially for autostart
 
-env = XCURSOR_SIZE,24
-env = HYPRCURSOR_SIZE,24
-
 # env = SDL_VIDEODRIVER,wayland									# Run SDL2 applications on Wayland. Remove or set to x11 if games that provide older versions of SDL cause compatibility issues
 env = GDK_BACKEND,wayland,x11,* 							# GTK: Use wayland if available. If not: try x11, then any other GDK backend.
 
@@ -27,7 +24,13 @@ env = XDG_CURRENT_DESKTOP,Hyprland
 env = XDG_SESSION_TYPE,wayland
 env = XDG_SESSION_DESKTOP,Hyprland
 
+env = XCURSOR_SIZE,32
+env = HYPRCURSOR_SIZE,32
+env = XCURSOR_THEME,catppuccin-macchiato-yellow-cursors
+
 env = TERMINAL,wezterm
+
+exec-once = hyprctl setcursor catppuccin-macchiato-yellow-cursors 32
 
 
 ################
@@ -41,15 +44,21 @@ env = TERMINAL,wezterm
 {{- end }}
 #
 #TODO: 120hz  workihng?
-$monwork = DP-1, 3840x2160@120.00, -2560x0, 1.5
+$monwork = DP-1, 3840x2160@60.00000, -2560x0, 1.5
 $monside = DP-2, 2560x1440@239.972000, 0x0, 1
 $monmisc = HDMI-A-2, preferred, 2560x0, 1, transform, 3   # Vertical
 # $monhifi = HDMI-A-1, disabled
-monitor = HDMI-A-1, 3840x2160@60.00000, -3840x0, 3, vrr, 0
 
 monitor = $monwork
 monitor = $monside
 monitor = $monmisc
+monitor = HDMI-A-1, 3840x2160@60.00000, -3840x0, 3, vrr, 0
+
+# Fix pixelation of scaled xwayland windows - https://wiki.hypr.land/Configuring/XWayland/
+xwayland {
+  force_zero_scaling = true
+}
+
 # # monitor = HDMI-A-2, preferred, -1920x0, 1               # Horizontal
 # # monitor= HDMI-A-1, preferred, 2560x0, 3
 
@@ -97,6 +106,9 @@ exec-once= kanshi
 exec-once = systemctl --user start hyprpolkitagent
 
 
+exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+
 # Utility
 # exec-once = hyprnotify		# Part of ecosystem but non-bundled. For hyprctl notify.
 # exec-once = hyprpaper			# Wallpaper
@@ -130,7 +142,7 @@ $ws = 4
 workspace = $ws, monitor:$mon, persistent:true, default:true, name:main
 # exec-once = [workspace special:browser] zen-browser
 exec-once = [workspace $ws] flatpak run app.zen_browser.zen   # Flatpak
-windowrule= workspace $ws silent, class:^(zen)$
+windowrule= workspace $ws silent, class:^(app.zen_browser.zen)$
 $ws = 5
 workspace = $ws, monitor:$mon, persistent:true
 # exec-once = [workspace $ws silent] $terminal 
@@ -142,7 +154,7 @@ workspace = $ws, monitor:$mon, persistent:true
 $mon = HDMI-A-2
 $ws = 7
 workspace = $ws, monitor:$mon, persistent:true, default:true, layoutopt:orientation:top
-windowrule= workspace $ws silent, class:^(ticktick|Proton Mail|Slack)$
+windowrule= workspace $ws silent, class:^(ticktick|Proton Mail|Slack|class.org.keepassxc.KeePassXC)$
 exec-once = [workspace $ws silent] slack & proton-mail & keepassxc & ticktick
 # exec-once = sleep 4 && hyprctl dispatch resizewindowpixel exact 26% 38%,class:org.keepassxc.KeePassXC
 $ws = 8 
